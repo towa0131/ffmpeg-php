@@ -414,7 +414,7 @@ FFMPEG_PHP_METHOD(ffmpeg_movie, __construct)
 #else
             if(ffmovie_ctx->rsrc_id->ptr == ffmovie_ctx) {
                 /* add a reference to the persistent movie */
-                GC_REFCOUNT(ffmovie_ctx->rsrc_id)++;
+                GC_REFCOUNT(ffmovie_ctx->rsrc_id++);
 #endif
 
             } else {
@@ -1195,8 +1195,8 @@ static const char* _php_get_codec_name(ff_movie_context *ffmovie_ctx, int type)
     } else if (decoder_ctx->codec_id == AV_CODEC_ID_MPEG2TS) {
         /* fake mpeg2 transport stream codec (currently not registered) */
         codec_name = "mpeg2ts";
-    } else if (decoder_ctx->codec_name[0] != '\0') {
-        codec_name = decoder_ctx->codec_name;
+    /*} else if (decoder_ctx->codec_name[0] != '\0') {
+        codec_name = decoder_ctx->codec_name;*/
     } else {
         /* output avi tags */
         if (decoder_ctx->codec_type == AVMEDIA_TYPE_VIDEO) {
